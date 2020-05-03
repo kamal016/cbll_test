@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Latest compiled and minified CSS -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" id="bootstrap-css" >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Pricing</title>
+    <link href="/stylesheet/menu.css" type="text/css" rel="stylesheet">
+    <link href="/stylesheet/menu.scss" type="text/css"  rel="stylesheet">
+    <link href="/stylesheet/pricing.css" type="text/css" rel="stylesheet">
+    <link  rel="stylesheet" type="text/css" href="/stylesheet/footer.css" >
+
+   
+    <!-- <script src="/public/javascript/payment.js" defer></script> -->
+    
+</head>
+
+
+<body>
+
+    
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./dist/jquery.json-editor.min.js"></script>
+
+    <h1> 
+        Test to world
+    </h1>
+    <pre id="json-display"></pre>
+    <script type="text/javascript">
+        function getJson() {
+            // have to use jquery here to get json object from rest api.
+            try {
+                // return JSON.parse($('#json-input').val());
+                return JSON.parse('{"name" : "kamal"}')
+            } catch (ex) {
+                alert('Wrong JSON Format: ' + ex);
+            }
+        }
+
+        var editor = new JsonEditor('#json-display', getJson());
+        $(document).ready(function () {
+            editor.load(getJson());
+        });
+    </script> -->
+
+
+
+
+<%- include ('nav.ejs') %> 
+    
+
+    
+<section class="pricing py-5 mb-5">
+    <div class="container">
+      <div class="row">
+        <!-- Free Tier -->
+        <div class="col-lg-4">
+          <div class="card mb-5 mb-lg-0">
+            <div class="card-body">
+              <h5 class="card-title text-muted text-uppercase text-center">Free</h5>
+              <h6 class="card-price text-center">$0<span class="period">/month</span></h6>
+              <hr>
+              <ul class="fa-ul">
+
+                <li><span class="fa-li"><i class="fa fa-check"></i></span><strong>10,000 requests / month</strong></li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>Language module</li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>Time zone module</li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>Limited support</li>
+                <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>SSL encryption</li>
+                <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>Connection module</li>
+                <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>Bulk endpoint</li>
+                <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>Security module</li>
+              </ul>
+              <!-- <a href="#" class="btn btn-block btn-primary text-uppercase" style = "background-color:rgb(32, 32, 32);">Generate Free Key</a> -->
+              <% if(!currentUser){ %>
+                <a href="/login" class="btn btn-block btn-primary text-uppercase" style = "background-color:rgb(32, 32, 32);">Generate Free Key</a>
+                <% } else { %>
+                  <a href="/account" class="btn btn-block btn-primary text-uppercase" style = "background-color:rgb(32, 32, 32);">Free Tier</a>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <!-- Plus Tier -->
+        <div class="col-lg-4">
+          <div class="card mb-5 mb-lg-0">
+            <div class="card-body">
+              <h5 class="card-title text-muted text-uppercase text-center">Plus</h5>
+              <h6 class="card-price text-center">$9<span class="period">/month</span></h6>
+              <hr>
+              <ul class="fa-ul">
+                <li><span class="fa-li"><i class="fa fa-check"></i></span><strong>50,000 requests / month</strong></li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>Language module</li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>Time zone module</li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>Premium support</li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>SSL encryption</li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>Connection module</li>
+                <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>Bulk endpoint</li>
+                <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>Security module</li>
+                </ul>
+                <% if(!currentUser){ %>
+                  <a href="/register" class="btn btn-block btn-primary text-uppercase">Sign UP</a>
+                  <% } else { %>
+                    <a href="/checkout" class="btn btn-block btn-primary text-uppercase" style = "background-color:rgb(32, 32, 32);">UPGRADE</a>
+                <% } %>
+            </div>
+          </div>
+        </div>
+        <!-- Pro Tier -->
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-muted text-uppercase text-center">Pro</h5>
+              <h6 class="card-price text-center">$49<span class="period">/month</span></h6>
+              <hr>
+              <ul class="fa-ul">
+                <li><span class="fa-li"><i class="fa fa-check"></i></span><strong>5,00,000 requests / month</strong></li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>Language module</li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>Time zone module</li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>Premium support</li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>SSL encryption</li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>Connection module</li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>Bulk endpoint</li>
+                <li><span class="fa-li"><i class="fa fa-check"></i></span>Security module</li>
+              </ul>
+              <% if(!currentUser){ %>
+                <a href="/register" class="btn btn-block btn-primary text-uppercase" >Sign UP</a>
+                <% } else { %>
+                  <a method="GET" href="/checkout" class="btn btn-block btn-primary text-uppercase btn-purchase" type = "button" style = "background-color:rgb(32, 32, 32); ">UPGRADE</a>
+                  <!-- <a class="btn btn-block btn-primary text-uppercase btn-purchase" type = "button" style = "background-color:rgb(32, 32, 32); color:white ">UPGRADE</a> -->
+                  <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+    <!-- <div>
+    To switch directories, type <kbd>cd</kbd> followed by the name of the directory.<br>
+    To edit settings, press <kbd><kbd>ctrl</kbd> + <kbd>,</kbd></kbd>
+    </div> -->
+
+
+    <%- include ('footer.ejs') %> 
+</body>
+</html>

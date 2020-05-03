@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<link rel="stylesheet" href="/stylesheet/login.css">
+	<link  rel="stylesheet" type="text/css" href="/stylesheet/menu.css"  >
+    <link  rel="stylesheet" type="text/css" href="/stylesheet/menu.scss" >
+    <link  rel="stylesheet" type="text/css" href="/stylesheet/footer.css" >
+</head>
+<body>
+    <div class="container">
+    	<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="panel panel-login">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-6">
+								<a href="/login" id="login-form-link">Login</a>
+							</div>
+							<div class="col-xs-6">
+								<a href="/register" class="active" id="register-form-link">Register</a>
+							</div>
+						</div>
+						<hr>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-lg-12">
+
+								<form id="register-form" action="/register" method="post" role="form" style="display: block;" >
+
+									<div class="form-group">
+										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>
+									</div>
+
+									<div class="form-group">
+										<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="" required>
+									</div>
+
+									<div class="form-group">
+										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
+									</div>
+
+									<div class="form-group">
+										<input type="company" name="company" id="company" tabindex="3" class="form-control" placeholder="Company Name" value="" required>
+									</div>
+
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-6 col-sm-offset-3">
+												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    
+    <script>
+        $(function() {
+            $('#login-form-link').click(function(e) {
+				document.location.href = "/login";
+				$("#login-form").delay(100).fadeIn(100);
+                $("#register-form").fadeOut(100);
+                $('#register-form-link').removeClass('active');
+                $(this).addClass('active');
+                e.preventDefault();
+            });
+        });
+
+	</script>
+	
+</body>
+</html>
+
+
+
+
+<!-- 
+<form action = "/login" method="POST">
+
+
+    <div>
+        <label for = "email">Email</label>
+        <input type = "email" id = "email" name = "email" required> 
+       </div>
+       
+    <div>
+        <label for = "password">Password</label>
+        <input type = "password" id = "password" name = "password" required> 
+       </div>
+    
+       <button type="submit">Login</button>
+
+</form>
+
+<a href="/register">Register</a> -->
+
+<!------ Include the above in your HEAD tag ---------->
+
+
+
+
+
+
+<!-- <h1>register</h1>
+
+<form action = "/register" method="POST">
+
+    <div>
+     <label for = "name">Name</label>
+     <input type = "text" id = "name" name = "name" required> 
+    </div>
+
+    <div>
+        <label for = "email">Email</label>
+        <input type = "email" id = "email" name = "email" required> 
+       </div>
+       
+    <div>
+        <label for = "password">Password</label>
+        <input type = "password" id = "password" name = "password" required> 
+       </div>
+    
+       <button type="submit">Register</button>
+
+</form>
+
+<a href="/login">Login</a> -->

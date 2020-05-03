@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" id="bootstrap-css" >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Home</title>
+    <link  rel="stylesheet" type="text/css" href="/stylesheet/menu.css"  >
+    <link  rel="stylesheet" type="text/css" href="/stylesheet/menu.scss" >
+    <link  rel="stylesheet" type="text/css" href="/stylesheet/footer.css" >
+</head>
+
+<body>    
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./dist/jquery.json-editor.min.js"></script>
+
+    <h1> 
+        Test to world
+    </h1>
+    <pre id="json-display"></pre>
+    <script type="text/javascript">
+        function getJson() {
+            // have to use jquery here to get json object from rest api.
+            try {
+                // return JSON.parse($('#json-input').val());
+                return JSON.parse('{"name" : "kamal"}')
+            } catch (ex) {
+                alert('Wrong JSON Format: ' + ex);
+            }
+        }
+
+        var editor = new JsonEditor('#json-display', getJson());
+        $(document).ready(function () {
+            editor.load(getJson());
+        });
+    </script> -->
+
+
+
+
+
+    <%- include ('nav.ejs') %> 
+    
+
+    <section id="home">
+        <div class="container-fluid" style="padding: 0 !important;padding-right: 0;padding-left: 0;">
+            <!-- <div class="container-fluid"> -->
+            <div class="container-fluid" style="padding-top: 5rem; padding-bottom: 5rem;">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="container ">
+                            <div class="list-group shadow" bg-warning mb-3 >
+                            <a href="/login" class="list-group-item list-group-item-dark bg-secondary text-white disable"><i class="fa fa-key"></i> <span style = 'margin-right:2.0em;'> Generate Key</span></a>
+                            <a href="/account" class="list-group-item text-dark"><i class="fa fa-arrow-circle-o-left text-secondary"></i> <span>Account</span></a>
+                            <a href="/documentation" class="list-group-item text-dark"><i class="fa fa-book text-secondary"></i> <span>QuickStart Overview</span></a>
+                            <a href="/contact" class="list-group-item text-dark"><i class="fa fa-question-circle text-secondary"></i> <span>Support</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 "style="padding-right:0px;">
+                        <div class="jumbotron jumbotron-fluid shadow-sm " style="padding-bottom: 80px;" >
+                            <div class="container ">
+                            <h1 class="display-4 text-secondary" >Find Nearest City by Latlong API</h1>
+                            <p class="lead ">Locate and identify nearest city by lat-long and show clean data.
+                                CBLL offers one of the leading Lat-long to geolocation
+                                API.
+                            </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- <script>
+        $(document).ready(function() {
+        $('.list-group-item').click(function(e) {
+            e.preventDefault();
+            $('.list-group-item').removeClass('active');
+            $(this).addClass('active');
+        });
+    });
+    </script> -->
+
+
+    <section id = "About" style="margin-bottom: 10rem;">
+        <div class="container-fluid">
+            <h1 class="text-center text-capitalize pt-5 text-secondary ">about CBLL</h1>
+            <hr class="my-2 p-4" >
+            <div class="row">
+                <div class="col-lg-6 col-mg-6 col-12">
+                    <img class="img-fluid" src="images/india-min.png">
+                </div>
+                <div class="container col-lg-6 col-mg-6 col-12">
+                    <h1 class="display-4 text-secondary" >Map 250+ Cities in India</h1><hr>
+                    <p class="lead ">
+                        <li class = "text-secondary">Nearest city location from Lat-Long coordinates</li>
+                        <li class = "text-secondary">State, District level information of city</li>
+                        <li class = "text-secondary">Primary and secondary languages spoken in city</li>
+                        <li class = "text-secondary">Geo-Map Coordinates of the city to map</li>
+                        <li class = "text-secondary">Rapid and secure data transfer API</li>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+<%- include ('footer.ejs') %> 
+</body>
+
+</html>

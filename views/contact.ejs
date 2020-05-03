@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" id="bootstrap-css" >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Home</title>
+    <link  rel="stylesheet" type="text/css" href="/stylesheet/menu.css"  >
+    <link  rel="stylesheet" type="text/css" href="/stylesheet/menu.scss" >
+    <link  rel="stylesheet" type="text/css" href="/stylesheet/footer.css" >
+    <link  rel="stylesheet" type="text/css" href="/stylesheet/contact.css" >
+</head>
+
+
+
+<body>
+  <%- include ('nav.ejs') %> 
+  <section id="contact">
+      <div class="container-fluid mt-5" style="padding-top: 5rem; padding-bottom: 8rem;">
+        <div style="text-align:center">
+        <h1>Contact Us</h1>
+        <p>You can ask anything, we have dedicated team for your query:</p>
+      </div>
+      <div class="row">
+        <div class="column">
+          <img src="/images/india.png" style="width:100%">
+        </div>
+        <div class="column">
+          <form action="/contact" method="post" role="form">
+            <label for="fname">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name..">
+            <label for="lname">Email</label>
+            <input type="text" id="email" name="email" placeholder="Your email">
+            <label for="country">Country</label>
+            <select id="country" name="country" placeholder="Select country">
+              <option value="India">India</option>
+              <option value="England">England</option>
+              <option value="South Africa">South Africa</option>
+              <option value="Bangladesh">Bangladesh</option>
+              <option value="Nepal">Nepal</option>
+              <option value="Australia">Australia</option>
+              <option value="Canada">Canada</option>
+              <option value="USA">USA</option>
+            </select>
+            <label for="subject">Subject</label>
+            <textarea id="subject" name="subject" placeholder="Write something.." style="height:170px"></textarea>
+            <input type="submit" value="Submit">
+          </form>
+        </div>
+      </div>
+    </div>  
+  </section>
+  <%- include ('footer.ejs') %> 
+</body>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" id="bootstrap-css" >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- <link rel="stylesheet" type="text/css" href="stylesheet/bootstrap.min.css" />   -->
+    <link rel="stylesheet" type="text/css" href="stylesheet/faqs.css" />
+    <link  rel="stylesheet" type="text/css" href="/stylesheet/footer.css" >
+
+
+    <title>Document</title>
+    
+</head>
+<body>
+
+    <%- include ('nav.ejs') %> 
+
+    <div class="container"  style="padding-top: 10rem;">
+        <div class="container-fluid"  style="margin-bottom: 10rem;">
+            <div class="panel-group" id="accordion">
+                <div class="faqHeader" style = 'color : #6c757d ;margin-bottom: 2rem;'><b><h1>FAQs about CBLL</h1></b></div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse"  href="#collapse1"><b style = 'color : #6c757d'>1. </b>How many API requests can CBLL handle?</a>
+                        </h5>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body" style="margin-bottom: 2rem;">
+                            <p> <i>The infrastructure behind CBLL and the CBLL API has grown to become highly scalable and efficient, currently handling between 2 to 3 billion API requests per day.</i></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse"  href="#collapse2"><b style = 'color : #6c757d'>2. </b>What happens if my allowed volume is exceeded?</a>
+                        </h5>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <div class="panel-body" style="margin-bottom: 2rem;">
+                           <p><i>Your API request volume can be exceeded by 20% without your service being affected. Please note that after 120% of your volume has been used your API access will be disabled.</i></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse3"><b style = 'color : #6c757d'>3. </b>Can I cancel anytime?</a>
+                        </h5>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse">
+                        <div class="panel-body" style="margin-bottom: 2rem;">
+                            <p><i>Yes. CBLL is a subscription-based service and your chosen plan renews automatically each month. You can upgrade, downgrade or cancel anytime.</i></p>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+
+
+    <%- include ('footer.ejs') %> 
+</body>
+</html>
+
+
+
+

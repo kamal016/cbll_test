@@ -1,0 +1,146 @@
+<head>
+    <title>Checkout</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <link href="/stylesheet/payment.css" type="text/css" rel="stylesheet">
+</head>
+
+<!-- <body>
+    <form id="payment-form">
+        <div id="card-element">
+          Elements will create input elements here
+        </div>
+      
+        We'll put the error messages in this element
+        <div id="card-errors" role="alert"></div>
+      
+        <button id="submit">Pay</button>
+      </form>
+</body>
+--> 
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-offset-3 col-md-6">
+        <div class="sr-root">
+          <div class="sr-main">
+            <h3>API Payment</h3>
+            <form id="payment-form" class="sr-payment-form">
+               
+              <div class="sr-combo-inputs-row">
+                <div class="sr-input sr-card-element" id="card-element"></div>
+              </div>
+              <div class="sr-field-error" id="card-errors" role="alert"></div>
+              <button id="submit">
+                <div class="spinner hidden" id="spinner"></div>
+                <span id="button-text">Pay $20</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+
+
+var displayError = document.getElementById('card-errors');
+
+function errorHandler(err) {
+  changeLoadingState(false);
+  displayError.textContent = err;
+}
+var orderData = {
+  items: [{ id: "cbll-fee" }],
+  currency: "usd"
+};
+
+// Set your publishable key: remember to change this to your live publishable key in production
+// See your keys here: https://dashboard.stripe.com/account/apikeys
+var stripe = Stripe('pk_test_HHFzq58fTcicGlNuiDi6Ql4D00fEwCbWNS');
+var elements = stripe.elements();
+
+// Set up Stripe.js and Elements to use in checkout form
+var style = {
+  base: {
+    color: "#32325d",
+  }
+};
+
+var card = elements.create("card", { style: style });
+card.mount("#card-element");
+
+card.addEventListener('change', function(event) {
+  if (event.error) {
+    errorHandler(event.error.message);
+  } else {
+    errorHandler('');
+  }
+});
+
+var form = document.getElementById('payment-form');
+
+form.addEventListener('submit', function(ev) {
+  ev.preventDefault();
+
+  changeLoadingState(true);
+  
+   stripe.createPaymentMethod("card", card)
+        .then(  function(result) {
+          if (result.error) {
+              console.log("Kamal error 1")
+            errorHandler(result.error.message);
+          } else {
+            // console.log("Kamal error 2", orderData)
+            try{
+                orderData.paymentMethodId = result.paymentMethod.id;
+                console.log("Kamal error 2", orderData)
+                
+                // added express.json() on server side before sending json data to the server.
+                return  fetch("/pay", {
+                    method: "POST",
+                    body: JSON.stringify(orderData),
+                    headers : {
+                    'Content-Type' : 'application/json'
+                    },
+                });
+            }
+            catch(err){
+                console.log("Chetna k bandhan")
+            }
+          }
+        })
+        .then(function(result) {
+          return result.json();
+        })
+        .then(function(response) {
+          if (response.error) {
+              console.log("yes i am inside the error");
+              
+            errorHandler(response.error);
+          } else {
+            changeLoadingState(false);
+            console.log("Well done Kamal.")
+            // redirect to /campgrounds with a query string
+            // that invokes a success flash message
+            window.location.href = '/?paid=true'
+          }
+        }).catch(function(err) {
+          errorHandler(err.error);
+        });
+});
+
+// Show a spinner on payment submission
+function changeLoadingState(isLoading) {
+    if (isLoading) {
+        document.querySelector("button").disabled = true;
+        document.querySelector("#spinner").classList.remove("hidden");
+        document.querySelector("#button-text").classList.add("hidden");
+    } else {
+        document.querySelector("button").disabled = false;
+        document.querySelector("#spinner").classList.add("hidden");
+        document.querySelector("#button-text").classList.remove("hidden");
+    }
+};
+</script>
+

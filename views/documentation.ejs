@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!-- Latest compiled and minified CSS -->
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" id="bootstrap-css" >
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.com/libraries/prettify"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/javascript/jquery.json-editor.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <title>Home</title>
+        <link type="text/css" href="/stylesheet/menu.css" rel="stylesheet">
+        <link type="text/css" href="/stylesheet/code.css" rel="stylesheet">
+        <link  rel="stylesheet" type="text/css" href="/stylesheet/footer.css" >
+        <style>
+            .jumbotron {
+            padding: 1rem 1rem;
+            }
+        </style>
+    </head>
+
+    <body onload="PR.prettyPrint()">
+        <!-- Navigation -->
+        <%- include ('nav.ejs') %> 
+        
+
+        <section id="home" class="mb-5" >
+            <div class="container-fluid" style="padding: 0 !important;padding-right: 0;padding-left: 0;">
+                <div class="container-fluid" style="padding-top: 50px; padding-bottom: 50px;">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="container " style="padding-bottom : 30px;">
+                                <div class="list-group shadow" bg-warning mb-3 >
+                                <a href="/pricing" class="list-group-item list-group-item-dark bg-secondary text-white"><i class="fa fa-key"></i> <span style = 'margin-right:2.0em;'> Generate Key</span></a>
+                                <a class="list-group-item text-dark" href="/pricing"><i class=" text-secondary"></i> <span>API Access Key</span></a>
+                                <a href="#ApiResponse" class="list-group-item text-dark"><i class="text-secondary"></i> <span>API Response</span></a>
+                                <a href="#https" class="list-group-item text-dark"><i class="text-secondary"></i> <span>Connecting via HTTPS</span></a>
+                                <a href="#errors" class="list-group-item text-dark"><i class="text-secondary"></i> <span>Error Codes</span></a>
+                                </div>
+                            </div>
+                            <div class="container " style="padding-bottom : 30px;">
+                                <div class="list-group shadow" bg-warning mb-3 >
+                                    <a href="#endpoint" class="list-group-item text-dark "><i class="text-secondary"></i><span>Standard Lookup</span></a>
+                                    <a class="list-group-item text-dark" href="#response"><i class="text-secondary"></i><span>Response Object</span></a>
+                                </div>
+                            </div>
+                            <div class="container "style="padding-bottom : 30px;">
+                                <div class="list-group shadow" bg-warning mb-3 >
+                                    <a href="#javascript" class="list-group-item text-dark "><i class="text-secondary"></i><span>Javascript (jQuery, ajax)</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 "style="padding-right:0px;">
+                            <div class="jumbotron jumbotron-fluid shadow-sm " style="padding-bottom: 10px;" >
+                                <div class="container ">
+                                    <h2 class="display-5 text-secondary" style = "padding-bottom: 1rem;" >City by lat-long API</h2>
+                                    <p class="lead ">
+                                        CBLL offers a powerful, real-time Lat-long to geolocation API capable of looking up accurate location data of nearest city. Results are delivered within milliseconds in JSON format. Using the CBLL API you will be able to get nearest city data to map down in BI applications.
+                                        <br>
+                                        This documentation outlines in detail API features, available options and integration guide.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="jumbotron jumbotron-fluid shadow-sm " style="padding-bottom: 10px;" >
+                                <div class="container ">
+                                    <h2 class="display-5 text-secondary" style = "padding-bottom: 1rem;" >Getting Started</h2>
+                                    <h4 class="display-5 text-secondary">API Access Key</h4>
+                                    
+                                    <p class="lead ">Your API Access Key is your unique authentication key used to gain access to the CBLL API. In order to authenticate with the API, append the <code>access_key</code> parameter to the API's base URL and set it to your access key value.</p>
+
+                                    <h6 class="display-5 text-secondary">Base URL:</h6>
+                                    
+                                    <div class='container'>
+                                        <pre class="prettyprint lang-scm">/https://api.citybylatlong.com</pre>
+                                    </div>
+
+                                    <h6 class="display-5 text-secondary">Append your API Access Key:</h6> <p class="lead ">Here is an example API call illustrating how to authenticate with the ipstack API:</p>
+
+                                    <div class='container'>
+                                        <pre class="prettyprint lang-scm">/https://api.citybylatlong.com/?lat=24.000?long=74.00?access_key = YOUR_ACCESS_KEY</pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <section id = "ApiResponse">
+                                <div class="jumbotron jumbotron-fluid shadow-sm " style="padding-bottom: 10px;" >
+                                    <div class="container ">
+                                        <h4 class="display-5 text-secondary">API Response</h4>
+                                        <p class="lead ">Your API Access Key is your unique authentication key used to gain access to the CBLL API. In order to authenticate with the API, append the <code>access_key</code> parameter to the API's base URL and set it to your access key value.</p>
+                                        <div class="container-fluid" style="padding: 0 !important;padding-right: 0;padding-left: 0;">
+                                            <pre id="json-display"></pre>
+                                    
+                                            <script type="text/javascript">
+                                                function getJson() {
+                                                                const object = JSON.stringify({
+                                                                "ip": "134.201.250.155",
+                                                                "hostname": "134.201.250.155",
+                                                                "type": "ipv4",
+                                                                "continent_code": "NA",
+                                                                "continent_name": "North America",
+                                                                "country_code": "US",
+                                                                "country_name": "United States",
+                                                                "region_code": "CA",
+                                                                "region_name": "California",
+                                                                "city": "Los Angeles",
+                                                                "zip": "90013",
+                                                                "latitude": 34.0453,
+                                                                "longitude": -118.2413,
+                                                                "location": {
+                                                                    "geoname_id": 5368361,
+                                                                    "capital": "Washington D.C.",
+                                                                    "languages": [
+                                                                        {
+                                                                        "code": "en",
+                                                                        "name": "English",
+                                                                        "native": "English"
+                                                                        }
+                                                                    ],
+                                                                    "country_flag": "https://assets.ipstack.com/images/assets/flags_svg/us.svg",
+                                                                    "country_flag_emoji": "🇺🇸",
+                                                                    "country_flag_emoji_unicode": "U+1F1FA U+1F1F8",
+                                                                    "calling_code": "1",
+                                                                    "is_eu": false
+                                                                },
+                                                                "time_zone": {
+                                                                    "id": "America/Los_Angeles",
+                                                                    "current_time": "2018-03-29T07:35:08-07:00",
+                                                                    "gmt_offset": -25200,
+                                                                    "code": "PDT",
+                                                                    "is_daylight_saving": true
+                                                                },
+                                                                "currency": {
+                                                                    "code": "USD",
+                                                                    "name": "US Dollar",
+                                                                    "plural": "US dollars",
+                                                                    "symbol": "$",
+                                                                    "symbol_native": "$"
+                                                                },
+                                                                "connection": {
+                                                                    "asn": 25876,
+                                                                    "isp": "Los Angeles Department of Water & Power"
+                                                                },
+                                                                "security": {
+                                                                    "is_proxy": false,
+                                                                    "proxy_type": null,
+                                                                    "is_crawler": false,
+                                                                    "crawler_name": null,
+                                                                    "crawler_type": null,
+                                                                    "is_tor": false,
+                                                                    "threat_level": "low",
+                                                                    "threat_types": null
+                                                                    }
+                                                                })
+                                                                    console.log(object)
+                                                                    // have to use jquery here to get json object from rest api.
+                                                                    try {
+                                                                        // return JSON.parse($('#json-input').val());
+                                                                        return JSON.parse(object)
+                                                                    } catch (ex) {
+                                                                        alert('Wrong JSON Format: ' + ex);
+                                                                    }
+                                                                }
+                                                var editor = new JsonEditor('#json-display', getJson());
+                                                $(document).ready(function () {
+                                                    editor.load(getJson());
+                                                });
+                                            </script>
+                                            <p class="lead ">API responses come with comprehensive location-related data, language-related data and timezone-related data.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id = "https">
+                                <div class="jumbotron jumbotron-fluid shadow-sm " style="padding-bottom: 10px;" >
+                                    <div class="container ">
+                                        <h4 class="display-5 text-secondary">Connecting via HTTPS</h4>
+                                        <p class="lead ">All premium subscription plans available for the ipstack API come with support for 256-bit SSL encryption. To connect to the API via HTTPS, simply use the https protocol instead of standard http.</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id = "errors">
+                                <div class="jumbotron jumbotron-fluid shadow-sm " style="padding-bottom: 10px;" >
+                                    <div class="container ">
+                                        <h4 class="display-5 text-secondary">Error Codes</h4>
+                                        <p class="lead ">Whenever a requested resource is not available or an API call fails for another reason, a JSON error is returned. Errors always come with an error code and a description.</p><br>
+                                        <p class="lead">Example Error: The following error is returned if your monthly API request volume has been exceeded.<p>
+                                        <div class="container-fluid" style="padding: 0 !important;padding-right: 0;padding-left: 0;">
+                                            <pre id="json-error"></pre>
+                                    
+                                            <script type="text/javascript">
+                                                function getJson() {
+                                                                const error = JSON.stringify({ 
+                                                                    "success": false,
+                                                                    "error": {
+                                                                        "code": 104,
+                                                                        "type": "usage_limit_reached",
+                                                                        "info": "Your monthly API request volume has been reached. Please upgrade your plan."    
+                                                                    }
+                                                                })
+                                                                    console.log("ERROR: "+error)
+                                                                    // have to use jquery here to get json object from rest api.
+                                                                    try {
+                                                                        // return JSON.parse($('#json-input').val());
+                                                                        return JSON.parse(error)
+                                                                    } catch (ex) {
+                                                                        alert('Wrong JSON Format: ' + ex);
+                                                                    }
+                                                                }
+                                                var editor = new JsonEditor('#json-error', getJson());
+                                                $(document).ready(function () {
+                                                    editor.load(getJson());
+                                                });
+                                            </script>
+                                            <h4 class="display-5 text-secondary" style="padding-top: 1rem; padding-bottom: 0.5em;">Other errors</h4>
+                                            <!-- TABLE -->
+                                            
+                                            <table class="table">
+                                                <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">Code</th>
+                                                    <th scope="col">Type</th>
+                                                    <th scope="col">Info</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="text-secondary"><strong>404</strong></td>
+                                                    <td><code>404_not_found</code></td>
+                                                    <td class="text-secondary">The requested resource does not exist.</td>		
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-secondary"><strong>101</strong></td>
+                                                    <td><code>missing_access_key</code></td>
+                                                    <td class="text-secondary">No API Key was specified.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-secondary"><strong>101</strong></td>
+                                                    <td><code>invalid_access_key</code></td>
+                                                    <td class="text-secondary">No API Key was specified or an invalid API Key was specified.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-secondary"><strong>103</strong></td>
+                                                    <td><code>invalid_api_function</code></td>
+                                                    <td class="text-secondary">The requested API endpoint does not exist.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-secondary"><strong>104</strong></td>
+                                                    <td><code>usage_limit_reached</code></td>
+                                                    <td class="text-secondary"> The maximum allowed amount of monthly API requests has been reached.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-secondary"><strong>105</strong></td>
+                                                    <td><code>function_access_restricted</code></td>
+                                                    <td class="text-secondary">The current subscription plan does not support this API endpoint.</td>
+                                                </tr>
+                                                    
+                                                <tr>
+                                                    <td class="text-secondary"><strong>105</strong></td>
+                                                    <td><code>https_access_restricted</code></td>
+                                                    <td class="text-secondary">The user's current subscription plan does not support HTTPS Encryption.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-secondary"><strong>301</strong></td>
+                                                    <td><code>invalid_fields</code></td>	
+                                                    <td class="text-secondary">One or more invalid fields were specified using the fields parameter.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-secondary"><strong>302</strong></td>
+                                                    <td><code>too_many_ips</code></td>
+                                                    <td class="text-secondary">Too many IPs have been specified for the Bulk Lookup Endpoint. (max. 50)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-secondary"><strong>303</strong></td>
+                                                    <td><code>batch_not_supported_on_plan</code></td>
+                                                    <td class="text-secondary">The Bulk Lookup Endpoint is not supported on the current subscription plan</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id = "endpoint">
+                                <div class="jumbotron jumbotron-fluid shadow-sm " style="padding-bottom: 10px;" >
+                                    <div class="container ">
+                                        <h2 class="display-5 text-secondary">Endpoints</h2>
+                                        <br>
+                                        <h4 class="display-5 text-secondary">Standard Lookup</h4>
+                                        <p class="lead ">The CBLL's primary endpoint is called Standard Lookup and is used to look up lat-long. To call this endpoint, simply attach any lat-long of India to the API's base URL.</p>
+                                        <h4 class="display-5 text-secondary" style="padding-top: 1rem; padding-bottom: 0.5em;">API Request</h4>
+                                        <div class='container'>
+                                            <pre class="prettyprint lang-scm">/https://api.citybylatlong.com/?lat=24.000?long=74.00?access_key = YOUR_ACCESS_KEY</pre>
+                                        </div>
+                                        <h6 class="display-5 text-secondary"  style="padding-top: 1rem; padding-bottom: 0.5em;">Request Parameters:</h6>         
+                                        <table class="table">
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">Parameter</th>
+                                                <th scope="col">Description</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><code>access_key</code></td>
+                                                <td class="text-secondary"><b>[Required]</b> Your API Access Key.</td>		
+                                            </tr>
+                                            <tr>
+                                                <td><code>security</code></td>
+                                                <td class="text-secondary">[optional] Set to 1 to enable the Security module.</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id = "response">
+                                <div class="jumbotron jumbotron-fluid shadow-sm " style="padding-bottom: 10px;" >
+                                    <div class="container ">
+                                        <h4 class="display-5 text-secondary">API Response</h4>
+                                        <h6 class="display-5 text-secondary" style="padding-top: 1rem; padding-bottom: 0.5em;">JSON:</h6>
+                                        <p class="lead">The API response for bulk queries will contain one data object per request.<p>
+                                        <div class="container-fluid" style="padding: 0 !important;padding-right: 0;padding-left: 0;">
+                                            <pre id="json-errori"> </pre>
+                                            <script type="text/javascript">
+                                                function getJson() {
+                                                                const error = JSON.stringify( {
+                                                                "ip": "134.201.250.155",
+                                                                "hostname": "134.201.250.155",
+                                                                "type": "ipv4",
+                                                                "continent_code": "NA",
+                                                                "continent_name": "North America",
+                                                                "country_code": "US",
+                                                                "country_name": "United States",
+                                                                "region_code": "CA",
+                                                                "region_name": "California"
+                                                                })
+                                                                    console.log("ERROR: "+error)
+                                                                    // have to use jquery here to get json object from rest api.
+                                                                    try {
+                                                                        // return JSON.parse($('#json-input').val());
+                                                                        return JSON.parse(error)
+                                                                    } catch (ex) {
+                                                                        alert('Wrong JSON Format: ' + ex);
+                                                                    }
+                                                                }
+                                                var editor = new JsonEditor('#json-errori', getJson());
+                                                $(document).ready(function () {
+                                                    editor.load(getJson());
+                                                });
+                                            </script>
+                                            <h4 class="display-5 text-secondary" style="padding-top: 1rem; padding-bottom: 0.5em;">Response Objects</h4>
+                                            <!-- TABLE -->
+                                            
+                                            <table class="table">
+                                                <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">Parameter</th>
+                                                    <th scope="col">Description</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td><code>access_key</code></td>
+                                                    <td class="text-secondary">Your API Access Key.</td>		
+                                                </tr>
+                                                <tr>
+                                                    <td><code>security</code></td>
+                                                    <td class="text-secondary">[optional] Set to 1 to enable the Security module.</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id = "javascript">
+                                <div class="jumbotron jumbotron-fluid shadow-sm " style="padding-bottom: 10px;" >
+                                    <div class="container ">
+                                        <h4 class="display-5 text-secondary">JavaScript (jQuery.ajax)</h4>
+                                        <h6 class="display-5 text-secondary" style="padding-top: 1rem; padding-bottom: 0.5em;">Standard Lookup: Find below an example for the Standard Lookup Endpoint using jQuery.ajax.</h6>
+                                        <div class='container'>
+                                            <pre class="prettyprint lang-scm" style="padding-left:  0px ;">
+                                                var ip = '134.201.250.155'
+                                                var access_key = 'YOUR_ACCESS_KEY';
+
+                                                // get the API result via jQuery.ajax
+                                                $.ajax({
+                                                url: 'http://api.ipstack.com/' + ip + '?access_key=' + access_key,   
+                                                dataType: 'jsonp',
+                                                success: function(json) {
+
+                                                // output the "capital" object inside "location"
+                                                alert(json.location.capital);
+
+                                                }
+                                                });
+                                            </pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <%- include ('footer.ejs') %> 
+    </body>
+</html>
