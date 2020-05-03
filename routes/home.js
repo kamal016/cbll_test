@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt")
 const passport = require('passport')
 var express = require('express')
 var router = express.Router();
-
+const flash = require('express-flash')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 
@@ -105,9 +105,23 @@ router.get('/logout', (req, res) => {
 router.get('/checkout', checkAuthenticated, (req, res) => {
     if (req.user.isPaid) {
         req.flash('success', 'Your account is already paid');
-        return res.redirect('/home');
+        return res.redirect('/account');
     }
-    res.render('checkout.ejs', { amount: 20 });
+    console.log("bro requ,,,,,,,,,:_>",req.query.pay)
+    res.render('checkout.ejs', { amount: req.query.pay});
+});
+
+
+
+
+// use query string to pass invoice and price value to checkout
+router.get('/invoice',  checkAuthenticated, (req, res) => {
+  var invoice_number = 12654
+  var pay = req.query
+  console.log(pay);
+  
+  res.redirect('/checkout?'+'invoice_number='+invoice_number)
+
 });
 
 

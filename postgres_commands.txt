@@ -1,0 +1,34 @@
+
+//  Create table.
+
+CREATE TABLE public.details
+(
+    id bigint NOT NULL ,
+    api_key character varying(100),
+    payment_status character varying(20),
+    amount_paid character varying(30),
+    available_calls character varying(20),
+	remaining_calls character varying(20),
+    billing_date character varying(20),
+	expiring_date character varying(20)
+);
+
+
+
+// Create table
+
+CREATE TABLE public.users
+(
+    id bigint NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+    username character varying(255) COLLATE pg_catalog."default",
+    password character varying(100) COLLATE pg_catalog."default",
+    email character varying(335) COLLATE pg_catalog."default",
+    company character varying(100) COLLATE pg_catalog."default",
+    created_on character varying(20) COLLATE pg_catalog."default",
+    CONSTRAINT users_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.users
+    OWNER to postgres;
