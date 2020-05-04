@@ -78,23 +78,21 @@ card.addEventListener('change', function(event) {
   }
 });
 
-var form = document.getElementByName('rate');
+var form = document.getElementById('payment-form');
 
 form.addEventListener('submit', function(ev) {
   ev.preventDefault();
-
   changeLoadingState(true);
-  
+  console.log("App ho khtrnaak")
    stripe.createPaymentMethod("card", card)
         .then(  function(result) {
           if (result.error) {
               console.log("Kamal error 1")
             errorHandler(result.error.message);
-          } else {
-          
+          } 
+          else {
             try{
                 orderData.paymentMethodId = result.paymentMethod.id;
-                
                 // added express.json() on server side before sending json data to the server.
                 return  fetch("/pay", {
                     method: "POST",
@@ -122,7 +120,7 @@ form.addEventListener('submit', function(ev) {
             console.log("Well done Kamal.")
             // redirect to /campgrounds with a query string
             // that invokes a success flash message
-            window.location.href = '/?paid=true'
+            window.location.href = '/'
           }
         }).catch(function(err) {
           errorHandler(err.error);

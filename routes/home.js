@@ -3,6 +3,8 @@ const passport = require('passport')
 var express = require('express')
 var router = express.Router();
 const flash = require('express-flash')
+const querystring = require('querystring');
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 
@@ -106,9 +108,11 @@ router.get('/checkout', checkAuthenticated, (req, res) => {
     if (req.user.isPaid) {
         req.flash('success', 'Your account is already paid');
         return res.redirect('/account');
-    }
-    console.log("bro requ,,,,,,,,,:_>",req.query.pay)
-    res.render('checkout.ejs', { amount: req.query.pay});
+    }    
+    var reverse_query = querystring.parse(req.query.go)
+    console.log("bro requ,,,,,,,,,:_>",reverse_query)
+    res.render('checkout.ejs', { amount: reverse_query.pay});
+
 });
 
 
@@ -116,11 +120,14 @@ router.get('/checkout', checkAuthenticated, (req, res) => {
 
 // use query string to pass invoice and price value to checkout
 router.get('/invoice',  checkAuthenticated, (req, res) => {
-  var invoice_number = 12654
-  var pay = req.query
-  console.log(pay);
-  
-  res.redirect('/checkout?'+'invoice_number='+invoice_number)
+  var invoiceId= 'CBLL'+Math.floor(Math.random()*Math.pow(10,13));
+  var pay = req.query.pay;
+  // var query_now = querystring.encode('invoice_ID='+invoiceId+'&pay='+pay)
+  var query_now = querystring.escape(querystring.stringify({'pay': pay,'invoice_ID': invoiceId}))
+  // console.log("/////////////////////",querystring.escape(query_now))
+  // console.log("///////////////////--->",decodeURI(query_now))
+
+  res.redirect('/checkout?go='+ query_now)
 
 });
 
@@ -154,23 +161,9 @@ router.post('/pay', checkAuthenticated, async (req, res) => {
               country: 'US',
             },
           },
-          });
+       });
      
-        
-
-    // });
-  
       console.log("💰 Payment received!");
-
-
- 
-
-    //   (async () => {
-    //     var customer = await stripe.customers.create({
-            
-      
-    //     console.log(customer.id);
-    //   })();
 
 
       req.user.isPaid = true;
