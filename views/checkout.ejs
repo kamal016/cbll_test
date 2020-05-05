@@ -50,9 +50,14 @@ function errorHandler(err) {
   changeLoadingState(false);
   displayError.textContent = err;
 }
+
+var amount =  '<%- amount %>';
+
+
 var orderData = {
   items: [{ id: "cbll-fee" }],
-  currency: "usd"
+  currency: "usd",
+  amountPay: amount
 };
 
 // Set your publishable key: remember to change this to your live publishable key in production
@@ -120,7 +125,7 @@ form.addEventListener('submit', function(ev) {
             console.log("Well done Kamal.")
             // redirect to /campgrounds with a query string
             // that invokes a success flash message
-            window.location.href = '/'
+            window.location.href = '/account'
           }
         }).catch(function(err) {
           errorHandler(err.error);
@@ -140,4 +145,3 @@ function changeLoadingState(isLoading) {
     }
 };
 </script>
-

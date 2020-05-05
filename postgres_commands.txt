@@ -5,12 +5,13 @@ CREATE TABLE public.details
 (
     id bigint NOT NULL ,
     api_key character varying(100),
+    invoice_id character varying(20),
     payment_status character varying(20),
     amount_paid character varying(30),
     available_calls character varying(20),
-	remaining_calls character varying(20),
-    billing_date character varying(20),
-	expiring_date character varying(20)
+    remaining_calls character varying(20),
+    billing_date character varying(20), 
+    expiring_date character varying(20)
 );
 
 

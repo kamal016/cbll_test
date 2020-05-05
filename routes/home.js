@@ -134,13 +134,18 @@ router.get('/invoice',  checkAuthenticated, (req, res) => {
 
 // POST pay
 router.post('/pay', checkAuthenticated, async (req, res) => {
-    const { paymentMethodId, items, currency} = req.body;
-    const test = await req.body;
+    const { paymentMethodId, items, currency, amountPay} = req.body;
 
-    const amount = 2000;
+    const amount = amountPay * 100;
 
-    // const currency = 'usd'
-    // const paymentMethodId = 'cbll_fee'
+    let description = 'Software development services'
+    let name = 'Kamal Thakur' 
+    let addressLine1 = '510 Townsend St'
+    let postalCode = '98140'
+    let city = 'San Francisco'
+    let state = 'CA'
+    let country = 'US'
+    
   
     try {
       // Create new PaymentIntent with a PaymentMethod ID from the client.
@@ -150,19 +155,19 @@ router.post('/pay', checkAuthenticated, async (req, res) => {
         payment_method: paymentMethodId,
         error_on_requires_action: true,
         confirm: true,
-        description: 'Software development services',
+        description: description,
         shipping: {
-            name: 'Jenny Rosen',
+            name: name,
             address: {
-              line1: '510 Townsend St',
-              postal_code: '98140',
-              city: 'San Francisco',
-              state: 'CA',
-              country: 'US',
+              line1: addressLine1,
+              postal_code: postalCode,
+              city: city,
+              state: state,
+              country: country,
             },
           },
        });
-     
+      
       console.log("💰 Payment received!");
 
 
