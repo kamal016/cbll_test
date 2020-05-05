@@ -51,13 +51,12 @@ function errorHandler(err) {
   displayError.textContent = err;
 }
 
-var amount =  '<%- amount %>';
-
 
 var orderData = {
   items: [{ id: "cbll-fee" }],
   currency: "usd",
-  amountPay: amount
+  amountPay: '<%- amount %>', 
+  invoiceId: '<%- invoiceId %>'
 };
 
 // Set your publishable key: remember to change this to your live publishable key in production

@@ -10,11 +10,14 @@ CREATE TABLE public.details
     amount_paid character varying(30),
     available_calls character varying(20),
     remaining_calls character varying(20),
+    start_timestamp character varying(20),
+	end_timestamp character varying(20),
     billing_date character varying(20), 
     expiring_date character varying(20)
 );
 
 
+1578767400    1610389800
 
 // Create table
 

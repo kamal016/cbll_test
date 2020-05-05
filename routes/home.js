@@ -1,14 +1,16 @@
-const bcrypt = require("bcrypt")
-const passport = require('passport')
-var express = require('express')
+const bcrypt = require("bcrypt");
+const passport = require('passport');
+var express = require('express');
 var router = express.Router();
-const flash = require('express-flash')
+const flash = require('express-flash');
 const querystring = require('querystring');
+const uuid = require('uuid');
+const moment = require('moment');
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 
-const initializePassport = require('../passport-config')
+const initializePassport = require('../passport-config');
 initializePassport (passport)
 
 router.use(passport.initialize())
@@ -21,7 +23,7 @@ const {pool} = require('../database')
 /* Get About Page */
 
 router.get('/', function(req, res){
-    res.render('home.ejs', {currentUser : req.user});
+  res.render('home.ejs', {currentUser : req.user});
 });
 
 router.post('/register', checkNotAuthenticated, async (req, res) => {
@@ -59,34 +61,22 @@ router.get('/register',checkNotAuthenticated, (req, res) =>{
 })
 
 router.get('/home', (req, res) =>{
+    
     res.render('home.ejs')
 })
 
 router.get('/contact', (req, res) =>{
-
-    const test = req.body
-    if(test){
-    console.log("+++++++++++++++++++++++++ //// " , test)
-    }
     res.render('contact.ejs',{currentUser : req.user})
 })
 router.post('/contact', (req, res) =>{
-    const test = req.body
-    if(test){
-    console.log("+++++++++++++++++++++++++ //// " , test)
-    }
     res.render('home.ejs',{currentUser : req.user})
 })
 
 router.get('/account',checkAuthenticated, (req, res) =>{
-    console.log("+++++++++++++>>>>",req.body);
-    
     res.render('account.ejs',{currentUser : req.user})
 })
 
 router.get('/pricing', (req, res) =>{
-    console.log("++++++++++++++ ",req.user)
-
     res.render('pricing.ejs' ,{currentUser : req.user})
 })
 
@@ -109,9 +99,8 @@ router.get('/checkout', checkAuthenticated, (req, res) => {
         req.flash('success', 'Your account is already paid');
         return res.redirect('/account');
     }    
-    var reverse_query = querystring.parse(req.query.go)
-    console.log("bro requ,,,,,,,,,:_>",reverse_query)
-    res.render('checkout.ejs', { amount: reverse_query.pay});
+    var reverseQuery = querystring.parse(req.query.go)
+    res.render('checkout.ejs', { amount: reverseQuery.pay, invoiceId: reverseQuery.invoiceId });
 
 });
 
@@ -120,24 +109,19 @@ router.get('/checkout', checkAuthenticated, (req, res) => {
 
 // use query string to pass invoice and price value to checkout
 router.get('/invoice',  checkAuthenticated, (req, res) => {
-  var invoiceId= 'CBLL'+Math.floor(Math.random()*Math.pow(10,13));
+  var invoiceId= 'CBLL'+Math.floor(Math.random()*Math.pow(10,7));
   var pay = req.query.pay;
-  // var query_now = querystring.encode('invoice_ID='+invoiceId+'&pay='+pay)
-  var query_now = querystring.escape(querystring.stringify({'pay': pay,'invoice_ID': invoiceId}))
-  // console.log("/////////////////////",querystring.escape(query_now))
-  // console.log("///////////////////--->",decodeURI(query_now))
-
+  var query_now = querystring.escape(querystring.stringify({'pay': pay,'invoiceId': invoiceId}))
   res.redirect('/checkout?go='+ query_now)
-
 });
 
 
 // POST pay
 router.post('/pay', checkAuthenticated, async (req, res) => {
-    const { paymentMethodId, items, currency, amountPay} = req.body;
+    req.user.isPaid = true;
 
+    const { paymentMethodId, items, currency, amountPay, invoiceId} = req.body;
     const amount = amountPay * 100;
-
     let description = 'Software development services'
     let name = 'Kamal Thakur' 
     let addressLine1 = '510 Townsend St'
@@ -148,7 +132,6 @@ router.post('/pay', checkAuthenticated, async (req, res) => {
     
   
     try {
-      // Create new PaymentIntent with a PaymentMethod ID from the client.
       const intent = await stripe.paymentIntents.create({
         amount,
         currency,
@@ -168,24 +151,48 @@ router.post('/pay', checkAuthenticated, async (req, res) => {
           },
        });
       
-      console.log("💰 Payment received!");
+      // console.log("💰 Payment received!");
+      
+      const startTimestamp = Date.now().toString()
+      const endTimestamp = (parseInt(startTimestamp) +  15897600000).toString() // 6 months add
+      const id = req.user.id
+      const apiKey  = uuid.v4()
+      const paymentStatus = 'paid'
 
+      if(amountPay<20){
+        var availableCalls  = 50000
+        var remainingCalls = 50000
+      }
+      else if (amountPay>40){
+        var availableCalls  = 500000
+        var remainingCalls = 500000
+      }
+      
+      const billingDate = moment().format('L')
+      const expiringDate = moment().add(6, "months").format('L')
 
-      req.user.isPaid = true;
-    //   await req.user.save();
+      var queryStr = `INSERT INTO details (id, api_key, invoice_id, payment_status, amount_paid, available_calls, remaining_calls, start_timestamp, end_timestamp, billing_date, expiring_date)
+                       VALUES ('${id}', '${apiKey}', '${invoiceId}', '${paymentStatus}', '${amountPay}', '${availableCalls}','${remainingCalls}','${startTimestamp}','${endTimestamp}','${billingDate}','${expiringDate}' )`
+
+      pool.query(queryStr).then(response => {
+          console.log( response)
+          res.send({ clientSecret: intent.client_secret });
+      }).catch(err => {
+        console.log(err.stack);
+        res.send({error: "Database connection failed. Please try again later."});
+      })
+
+      // await req.user.save();
       // The payment is complete and the money has been moved
       // You can add any post-payment code here (e.g. shipping, fulfillment, etc)
   
       // Send the client secret to the client to use in the demo
-      res.send({ clientSecret: intent.client_secret });
+      // res.send({ clientSecret: intent.client_secret });
     } catch (e) {
       // Handle "hard declines" e.g. insufficient funds, expired card, card authentication etc
       // See https://stripe.com/docs/declines/codes for more
       if (e.code === "authentication_required") {
-        res.send({
-          error:
-            "This card requires authentication in order to proceeded. Please use a different card."
-        });
+        res.send({error: "This card requires authentication in order to proceeded. Please use a different card."});
       } else {
         res.send({ error: e.message });
       }
