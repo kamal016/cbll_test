@@ -13,7 +13,7 @@ function initialize(passport) {
           if (pg_password.length > 0) {
                 try {
                     if (bcrypt.compare(password, pg_password)) {
-                      return done(null, { id: data.id, username: data.username, company: data.company })
+                      return done(null, { id: data.id, username: data.username, company: data.company, email: data.email })
                     } else {
                       return done(null, false, { message: 'Password incorrect' })
                     }

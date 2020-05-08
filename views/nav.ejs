@@ -11,10 +11,10 @@
         <li class="nav-item"><a class="nav-link" href="/">About</a></li>
         <li class="nav-item"><a class="nav-link" href="/pricing">Pricing</a></li>
         <li class="nav-item"><a class="nav-link" href="/faqs">FAQs</a></li>
+        
         <% if(!currentUser){ %>
         <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
         <% } else { %>
-
         <li class="nav-item"><a class="nav-link" href="/logout" style="color: #029f5b;">  <%= currentUser.username %> (Logout)</a></li>
         <% } %>
         </ul>

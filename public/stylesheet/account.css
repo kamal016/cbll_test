@@ -1,0 +1,16 @@
+.details {
+    text-align: left;
+    color: #6c757d;
+    border: 0 solid #a4a4a4;
+    width: 100%;
+    min-width: 400px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-collapse: collapse;
+    padding: 5px;
+    line-height: 20px;
+    padding-right:15rem;
+    border-collapse: separate;
+    border-spacing: .5em;
+}

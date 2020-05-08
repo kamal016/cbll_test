@@ -6,9 +6,9 @@ const flash = require('express-flash');
 const querystring = require('querystring');
 const uuid = require('uuid');
 const moment = require('moment');
+const keygen = require("keygenerator");
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
 
 const initializePassport = require('../passport-config');
 initializePassport (passport)
@@ -72,9 +72,87 @@ router.post('/contact', (req, res) =>{
     res.render('home.ejs',{currentUser : req.user})
 })
 
-router.get('/account',checkAuthenticated, (req, res) =>{
-    res.render('account.ejs',{currentUser : req.user})
-})
+
+
+
+
+router.get('/account',checkAuthenticated, async (req, res) =>{
+  // var queryStr = `INSERT INTO details (id, api_key, invoice_id, payment_status, amount_paid, available_calls, remaining_calls, start_timestamp, end_timestamp, billing_date, expiring_date)
+  // VALUES ('${id}', '${apiKey}', '${invoiceId}', '${paymentStatus}', '${amountPay}', '${availableCalls}','${remainingCalls}','${startTimestamp}','${endTimestamp}','${billingDate}','${expiringDate}' )`
+  let queryStr = `SELECT * FROM details where id = ${req.user.id} order by start_timestamp desc limit 1`
+
+  await pool.query(queryStr).then(response => {
+    // console.log( response)
+      if ((response.rows).length == 0)
+      {
+        let key = uuid.v4()
+        let id = req.user.id
+        let invoiceId = 'CBLL00XXXX'
+        let paymentStatus = 'free'
+        let amountPay = '0'
+        let availableCalls = 10000
+        let remainingCalls = 5000
+        const startTimestamp = Date.now().toString()
+        const endTimestamp = (parseInt(startTimestamp) +  2678400000).toString() 
+        let billingDate =  moment().format('L')
+        let expiringDate =  moment().add(1, "months").format('L')
+        
+        var data = {'key':key, 
+                    'id': id, 
+                    'invoiceId': invoiceId, 
+                    'paymentStatus': paymentStatus,
+                    'amountPay' : amountPay,
+                    'availableCalls' : availableCalls,
+                    'remainingCalls' : remainingCalls,
+                    'startTimestamp' : startTimestamp,
+                    'endTimestamp' : endTimestamp,
+                    'billingDate' : billingDate,
+                    'expiringDate' : expiringDate  
+                  }
+
+        let queryStr = `INSERT INTO details (id, api_key, invoice_id, payment_status, amount_paid, available_calls, remaining_calls, start_timestamp, end_timestamp, billing_date, expiring_date)
+                       VALUES ('${id}', '${key}', '${invoiceId}', '${paymentStatus}', '${amountPay}', '${availableCalls}','${remainingCalls}','${startTimestamp}','${endTimestamp}','${billingDate}','${expiringDate}' )`
+        pool.query(queryStr).then(response => {
+          console.log( response)
+          res.render('account.ejs',{currentUser : req.user,  data : data})
+          // res.send({ clientSecret: intent.client_secret });
+        }).catch(err => {
+          console.log(err.stack);
+          // res.send({error: "Database connection failed. Please try again later."});
+        })
+      }
+      else{
+        // console.log('got rows', response.rows[0]['api_key']);
+        var row = response.rows[0]
+        if (row){
+          var data = {'key':row['api_key'], 
+          'id': row['id'], 
+          'invoiceId': row['invoice_id'], 
+          'paymentStatus': row['payment_status'],
+          'amountPay' : row['amount_paid'],
+          'availableCalls' : row['available_calls'],
+          'remainingCalls' : row['remaining_calls'],
+          'startTimestamp' : row['start_timestamp'],
+          'endTimestamp' : row['end_timestamp'],
+          'billingDate' : row['billing_date'],
+          'expiringDate' : row['expiring_date']
+        }
+        // console.log(data);
+        
+        res.render('account.ejs',{currentUser : req.user,  data : data})
+        }
+        
+        
+      }
+    }).catch(err => {
+    console.log(err.stack);
+    // res.send({error: "Database connection failed. Please try again later."});
+    })
+      // res.render('account.ejs',{currentUser : req.user})
+  })
+
+
+
 
 router.get('/pricing', (req, res) =>{
     res.render('pricing.ejs' ,{currentUser : req.user})
@@ -99,7 +177,7 @@ router.get('/checkout', checkAuthenticated, (req, res) => {
         req.flash('success', 'Your account is already paid');
         return res.redirect('/account');
     }    
-    var reverseQuery = querystring.parse(req.query.go)
+    let reverseQuery = querystring.parse(req.query.go)
     res.render('checkout.ejs', { amount: reverseQuery.pay, invoiceId: reverseQuery.invoiceId });
 
 });
@@ -109,9 +187,9 @@ router.get('/checkout', checkAuthenticated, (req, res) => {
 
 // use query string to pass invoice and price value to checkout
 router.get('/invoice',  checkAuthenticated, (req, res) => {
-  var invoiceId= 'CBLL'+Math.floor(Math.random()*Math.pow(10,7));
-  var pay = req.query.pay;
-  var query_now = querystring.escape(querystring.stringify({'pay': pay,'invoiceId': invoiceId}))
+  let invoiceId= 'CBLL'+Math.floor(Math.random()*Math.pow(10,7));
+  let pay = req.query.pay;
+  let query_now = querystring.escape(querystring.stringify({'pay': pay,'invoiceId': invoiceId}))
   res.redirect('/checkout?go='+ query_now)
 });
 
@@ -171,7 +249,7 @@ router.post('/pay', checkAuthenticated, async (req, res) => {
       const billingDate = moment().format('L')
       const expiringDate = moment().add(6, "months").format('L')
 
-      var queryStr = `INSERT INTO details (id, api_key, invoice_id, payment_status, amount_paid, available_calls, remaining_calls, start_timestamp, end_timestamp, billing_date, expiring_date)
+      let queryStr = `INSERT INTO details (id, api_key, invoice_id, payment_status, amount_paid, available_calls, remaining_calls, start_timestamp, end_timestamp, billing_date, expiring_date)
                        VALUES ('${id}', '${apiKey}', '${invoiceId}', '${paymentStatus}', '${amountPay}', '${availableCalls}','${remainingCalls}','${startTimestamp}','${endTimestamp}','${billingDate}','${expiringDate}' )`
 
       pool.query(queryStr).then(response => {
@@ -214,5 +292,12 @@ if (req.isAuthenticated()) {
 }
 next()
 }
+
+function generateKey(){
+  let key = keygen._();
+  return key
+}
+
+
 
 module.exports = router;

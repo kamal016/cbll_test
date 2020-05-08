@@ -15,8 +15,9 @@
 
     <title>Pricing</title>
     <link href="/stylesheet/menu.css" type="text/css" rel="stylesheet">
-    <link href="/stylesheet/menu.scss" type="text/css"  rel="stylesheet">
-    <link  rel="stylesheet" type="text/css" href="/stylesheet/footer.css" >
+    <link href="/stylesheet/menu.scss" type="text/css" rel="stylesheet">
+    <link href="/stylesheet/account.css" type= "text/css" rel="stylesheet"  >
+    <link  href="/stylesheet/footer.css"  type="text/css" rel="stylesheet" >
     
 </head>
 
@@ -54,7 +55,7 @@
                                 <div class="container ">
                                     <h4 class=" text-secondary" > <i class="fa fa-key"></i>    Your API Access Key</h4>
                                     <br>
-                                    <div class="container p-3 my-1 border" style="background-color:rgb(246, 247, 248); "> 7303fe263f197235ec01af12631b1f4a
+                                    <div class="container p-3 my-1 border" style="background-color:rgb(246, 247, 248); "> <%= data.key %>
                                         <a style = " padding: 5px; margin: 0; float: right; font-size: medium; letter-spacing: normal; position: absolute; right: 2rem; top: 5.3rem;background: #283f59; color: white; border-radius: 5px;"> Reset </a>
                                         <span> </span>
                                     </div>  
@@ -66,31 +67,18 @@
                                 <h4 class=" text-secondary" > Your Plan</h4>
                                 <br>
                                 <div class="container p-3 my-1 border" style="background-color:rgb(246, 247, 248); ">
-                                    <table  style = "text-align: left;
-                                        color: #6c757d;
-                                        border: 0 solid #a4a4a4;
-                                        width: 100%;
-                                        min-width: 400px;
-                                        border-radius: 5px;
-                                        -webkit-border-radius: 5px;
-                                        -moz-border-radius: 5px;
-                                        border-collapse: collapse;
-                                        padding: 5px;
-                                        line-height: 20px;
-                                        padding-right:15rem;
-                                        border-collapse: separate;
-                                        border-spacing: .5em;">
+                                    <table  class="details" >
                                     <tbody>
                                         <tr>
                                             <th>Subscription : </th>
-                                            <td>Free Plan</td>
+                                            <td><%= data.paymentStatus%> plan</td>
                                         </tr>
                                         
                                         <tr>
                                             <th>API Usage : </th>
                                             <td>
-                                                <span >0%</span>
-                                                (0/10,000)
+                                                <span ><%=((data.availableCalls - data.remainingCalls)/data.availableCalls)*100 %>%</span>
+                                                (<%=(data.availableCalls - data.remainingCalls)%>/<%= data.availableCalls %>)
                                             </td>
                                         </tr>
                                     </tbody>
@@ -102,30 +90,17 @@
                                 <h4 class=" text-secondary" > Your Account</h4>
                                 <br>
                                 <div class="container p-3 my-1 border" style="background-color:rgb(246, 247, 248); ">
-                                    <table  style = "text-align: left;
-                                        color: #6c757d;
-                                        border: 0 solid #a4a4a4;
-                                        width: 100%;
-                                        min-width: 400px;
-                                        border-radius: 5px;
-                                        -webkit-border-radius: 5px;
-                                        -moz-border-radius: 5px;
-                                        border-collapse: collapse;
-                                        padding: 5px;
-                                        line-height: 20px;
-                                        padding-right:15rem;
-                                        border-collapse: separate;
-                                        border-spacing: .5em;">
+                                    <table class="details">
                                     <tbody>
                                         <tr>
                                             <th>Name :  </th>
-                                            <td>Kamal Thakur</td>
+                                            <td><%= currentUser.username%></td>
                                         </tr>
                                         
                                         <tr>
                                             <th>E-mail :  </th>
                                             <td>
-                                                kamalec016@gmail.com
+                                                <%= currentUser.email %>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -136,44 +111,30 @@
                                 <h4 class=" text-secondary" > Payment</h4>
                                 <br>
                                 <div class="container p-3 my-1 border" style="background-color:rgb(246, 247, 248); ">
-                                    <table  style = "text-align: left;
-                                        color: #6c757d;
-                                        border: 0 solid #a4a4a4;
-                                        width: 100%;
-                                        min-width: 400px;
-                                        border-radius: 5px;
-                                        -webkit-border-radius: 5px;
-                                        -moz-border-radius: 5px;
-                                        border-collapse: collapse;
-                                        padding: 5px;
-                                        line-height: 20px;
-                                        padding-right:15rem;
-                                        border-collapse: separate;
-                                        border-spacing: .5em;">
+                                    <table class="details">
                                     <tbody>
                                         <tr>
-                                            <th>Current :  </th>
-                                            <td>No payment methods on file</td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <th>Billing period :  </th>
+                                            <th>Invoice ID:  </th>
                                             <td>
-                                                2020-04-01 - 2020-04-30
+                                                <%= data.invoiceId%>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Total Due :  </th>
+                                            <th>Billing period :  </th>
                                             <td>
-                                                $0.00
+                                                <%= data.billingDate%> - <%= data.expiringDate%>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Amount Paid :  </th>
+                                            <td>
+                                                $<%= data.amountPay%>
                                             </td>
                                         </tr>
                                     </tbody>
                                     </table>
                                 </div>  
                             </div>
-
-
                         </div>
                     </div>
                 </div>
