@@ -7,7 +7,8 @@
     <title>Login</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<link rel="stylesheet" href="/stylesheet/login.css">
 	<link  rel="stylesheet" type="text/css" href="/stylesheet/menu.css"  >
     <link  rel="stylesheet" type="text/css" href="/stylesheet/menu.scss" >
@@ -50,7 +51,9 @@
 									<div class="form-group">
 										<input type="company" name="company" id="company" tabindex="3" class="form-control" placeholder="Company Name" value="" required>
 									</div>
-
+									<div class="form-group" style = "padding-left: auto; padding-right: auto;" >
+									<div class="g-recaptcha" data-sitekey="6LckVPUUAAAAAPo8tHwFEuda4CUYYVwq71g-zcNg"></div>
+									</div>
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
@@ -78,9 +81,7 @@
                 e.preventDefault();
             });
         });
-
 	</script>
-	
 </body>
 </html>
 

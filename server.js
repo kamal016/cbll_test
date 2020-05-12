@@ -7,6 +7,7 @@ const app = express()
 
 const methodOverride = require('method-override')
 const routes = require('./routes/home')
+const contact = require('./routes/contact')
 const flash = require('express-flash')
 const session = require('express-session')
 
@@ -24,7 +25,7 @@ app.use(session({
 
 
 app.use('/',routes);
-
+app.use('/',contact);
 
 //catch 404 and forward to
 // app.use(function(req, res, next){

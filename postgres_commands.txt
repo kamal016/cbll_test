@@ -17,6 +17,16 @@ CREATE TABLE public.details
 );
 
 
+
+CREATE TABLE queries
+(
+    id bigint NOT NULL ,
+    name character varying(100),
+    email character varying(20),
+    country character varying(20),
+	message character varying(20)
+);
+
 1578767400    1610389800
 
 // Create table

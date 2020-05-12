@@ -2,12 +2,11 @@ const bcrypt = require("bcrypt");
 const passport = require('passport');
 var express = require('express');
 var router = express.Router();
-const flash = require('express-flash');
+
 const querystring = require('querystring');
 const uuid = require('uuid');
 const moment = require('moment');
 const keygen = require("keygenerator");
-
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const initializePassport = require('../passport-config');
@@ -21,7 +20,6 @@ router.use(express.json());
 const {pool} = require('../database')
 
 /* Get About Page */
-
 router.get('/', function(req, res){
   res.render('home.ejs', {currentUser : req.user});
 });
@@ -60,29 +58,20 @@ router.get('/register',checkNotAuthenticated, (req, res) =>{
     res.render('register.ejs')
 })
 
-router.get('/home', (req, res) =>{
-    
-    res.render('home.ejs')
-})
+
 
 router.get('/contact', (req, res) =>{
     res.render('contact.ejs',{currentUser : req.user})
 })
-router.post('/contact', (req, res) =>{
-    res.render('home.ejs',{currentUser : req.user})
-})
+// router.post('/contact', (req, res) =>{
+//     res.render('home.ejs',{currentUser : req.user})
+// })
 
 
-
-
-
-router.get('/account',checkAuthenticated, async (req, res) =>{
-  // var queryStr = `INSERT INTO details (id, api_key, invoice_id, payment_status, amount_paid, available_calls, remaining_calls, start_timestamp, end_timestamp, billing_date, expiring_date)
-  // VALUES ('${id}', '${apiKey}', '${invoiceId}', '${paymentStatus}', '${amountPay}', '${availableCalls}','${remainingCalls}','${startTimestamp}','${endTimestamp}','${billingDate}','${expiringDate}' )`
+router.get('/account',checkAuthenticated, (req, res) =>{
   let queryStr = `SELECT * FROM details where id = ${req.user.id} order by start_timestamp desc limit 1`
 
-  await pool.query(queryStr).then(response => {
-    // console.log( response)
+  pool.query(queryStr).then(response => {
       if ((response.rows).length == 0)
       {
         let key = uuid.v4()
@@ -115,40 +104,31 @@ router.get('/account',checkAuthenticated, async (req, res) =>{
         pool.query(queryStr).then(response => {
           console.log( response)
           res.render('account.ejs',{currentUser : req.user,  data : data})
-          // res.send({ clientSecret: intent.client_secret });
         }).catch(err => {
           console.log(err.stack);
-          // res.send({error: "Database connection failed. Please try again later."});
         })
       }
       else{
-        // console.log('got rows', response.rows[0]['api_key']);
         var row = response.rows[0]
         if (row){
           var data = {'key':row['api_key'], 
-          'id': row['id'], 
-          'invoiceId': row['invoice_id'], 
-          'paymentStatus': row['payment_status'],
-          'amountPay' : row['amount_paid'],
-          'availableCalls' : row['available_calls'],
-          'remainingCalls' : row['remaining_calls'],
-          'startTimestamp' : row['start_timestamp'],
-          'endTimestamp' : row['end_timestamp'],
-          'billingDate' : row['billing_date'],
-          'expiringDate' : row['expiring_date']
+                      'id': row['id'], 
+                      'invoiceId': row['invoice_id'], 
+                      'paymentStatus': row['payment_status'],
+                      'amountPay' : row['amount_paid'],
+                      'availableCalls' : row['available_calls'],
+                      'remainingCalls' : row['remaining_calls'],
+                      'startTimestamp' : row['start_timestamp'],
+                      'endTimestamp' : row['end_timestamp'],
+                      'billingDate' : row['billing_date'],
+                      'expiringDate' : row['expiring_date']
+                    }    
+          res.render('account.ejs',{currentUser : req.user,  data : data})
         }
-        // console.log(data);
-        
-        res.render('account.ejs',{currentUser : req.user,  data : data})
-        }
-        
-        
       }
     }).catch(err => {
-    console.log(err.stack);
-    // res.send({error: "Database connection failed. Please try again later."});
-    })
-      // res.render('account.ejs',{currentUser : req.user})
+      console.log(err.stack);
+      })
   })
 
 
@@ -162,6 +142,7 @@ router.get('/documentation', (req, res) =>{
     res.render('documentation.ejs',{currentUser : req.user})
 })
 
+
 router.get('/faqs', (req, res) =>{
     res.render('faqs.ejs',{currentUser : req.user})
 })
@@ -174,16 +155,12 @@ router.get('/logout', (req, res) => {
 //GET Checkout
 router.get('/checkout', checkAuthenticated, (req, res) => {
     if (req.user.isPaid) {
-        req.flash('success', 'Your account is already paid');
         return res.redirect('/account');
     }    
     let reverseQuery = querystring.parse(req.query.go)
     res.render('checkout.ejs', { amount: reverseQuery.pay, invoiceId: reverseQuery.invoiceId });
 
 });
-
-
-
 
 // use query string to pass invoice and price value to checkout
 router.get('/invoice',  checkAuthenticated, (req, res) => {
@@ -260,15 +237,7 @@ router.post('/pay', checkAuthenticated, async (req, res) => {
         res.send({error: "Database connection failed. Please try again later."});
       })
 
-      // await req.user.save();
-      // The payment is complete and the money has been moved
-      // You can add any post-payment code here (e.g. shipping, fulfillment, etc)
-  
-      // Send the client secret to the client to use in the demo
-      // res.send({ clientSecret: intent.client_secret });
     } catch (e) {
-      // Handle "hard declines" e.g. insufficient funds, expired card, card authentication etc
-      // See https://stripe.com/docs/declines/codes for more
       if (e.code === "authentication_required") {
         res.send({error: "This card requires authentication in order to proceeded. Please use a different card."});
       } else {
@@ -276,8 +245,6 @@ router.post('/pay', checkAuthenticated, async (req, res) => {
       }
     }
 });
-
-
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -297,7 +264,5 @@ function generateKey(){
   let key = keygen._();
   return key
 }
-
-
 
 module.exports = router;
