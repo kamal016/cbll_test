@@ -9,6 +9,21 @@ const moment = require('moment');
 const keygen = require("keygenerator");
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+const Swal = require('sweetalert2')
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  onOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+
 const initializePassport = require('../passport-config');
 initializePassport (passport)
 
@@ -30,7 +45,6 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
     const email = req.body.email
     const company = req.body.company
     const timestamp = Date.now().toString()
-    // client.connect()
     var query_str = `INSERT INTO users (username, email,password,company, created_on) VALUES ('${username}', '${email}', '${hashedPassword}', '${company}', '${timestamp}')`
     pool.query(query_str).then(res => {
         console.log( res)
@@ -39,7 +53,6 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
         console.log(err.stack);
     }).finally(() => {            
         res.redirect('/login')
-        // client.end()
 })
 })
 
@@ -64,7 +77,9 @@ router.get('/contact', (req, res) =>{
     res.render('contact.ejs',{currentUser : req.user})
 })
 // router.post('/contact', (req, res) =>{
-//     res.render('home.ejs',{currentUser : req.user})
+
+//   console.log("Yes i am here -->", req.body)
+//   res.redirect('/')
 // })
 
 
@@ -231,6 +246,12 @@ router.post('/pay', checkAuthenticated, async (req, res) => {
 
       pool.query(queryStr).then(response => {
           console.log( response)
+          console.log("toast toh hone ko mangta tha bc");
+          
+          // Toast.fire({
+          //   icon: 'success',
+          //   title: 'Signed in successfully'
+          // })
           res.send({ clientSecret: intent.client_secret });
       }).catch(err => {
         console.log(err.stack);
