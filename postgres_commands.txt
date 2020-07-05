@@ -46,3 +46,17 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.users
     OWNER to postgres;
+
+CREATE TABLE cities(
+	country VARCHAR (50)  NOT NULL,
+	state VARCHAR (50) NOT NULL,
+	city VARCHAR (50) NOT NULL,
+	district VARCHAR (50) NOT NULL,
+	lat VARCHAR (50) NOT NULL,
+	long VARCHAR (50) NOT NULL,
+	gps_Cordinates VARCHAR (50) NOT NULL,
+	language VARCHAR (150) NOT NULL,
+	other_Languages VARCHAR (50) NOT NULL
+);
+
+select * from cities
