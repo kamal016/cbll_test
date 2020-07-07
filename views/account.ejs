@@ -77,7 +77,7 @@
                                         <tr>
                                             <th>API Usage : </th>
                                             <td>
-                                                <span ><%=((data.availableCalls - data.remainingCalls)/data.availableCalls)*100 %>%</span>
+                                                <span ><%= (((data.availableCalls - data.remainingCalls)/data.availableCalls)*100).toFixed(2) %>%</span>
                                                 (<%=(data.availableCalls - data.remainingCalls)%>/<%= data.availableCalls %>)
                                             </td>
                                         </tr>

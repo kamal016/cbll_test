@@ -53,11 +53,11 @@
                                     <a class="list-group-item text-dark" href="#response"><i class="text-secondary"></i><span>Response Object</span></a>
                                 </div>
                             </div>
-                            <div class="container "style="padding-bottom : 30px;">
+                            <!-- <div class="container "style="padding-bottom : 30px;">
                                 <div class="list-group shadow" bg-warning mb-3 >
                                     <a href="#javascript" class="list-group-item text-dark "><i class="text-secondary"></i><span>Javascript (jQuery, ajax)</span></a>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-lg-9 "style="padding-right:0px;">
                             <div class="jumbotron jumbotron-fluid shadow-sm " style="padding-bottom: 10px;" >
@@ -86,7 +86,7 @@
                                     <h6 class="display-5 text-secondary">Append your API Access Key:</h6> <p class="lead ">Here is an example API call illustrating how to authenticate with the ipstack API:</p>
 
                                     <div class='container'>
-                                        <pre class="prettyprint lang-scm">/https://api.citybylatlong.com/?lat=24.000?long=74.00?access_key = YOUR_ACCESS_KEY</pre>
+                                        <pre class="prettyprint lang-scm">/https://api.citybylatlong.com/query?lat=11.2&long=78.01&key = YOUR_ACCESS_KEY</pre>
                                     </div>
                                 </div>
                             </div>
@@ -100,65 +100,7 @@
                                     
                                             <script type="text/javascript">
                                                 function getJson() {
-                                                                const object = JSON.stringify({
-                                                                "ip": "134.201.250.155",
-                                                                "hostname": "134.201.250.155",
-                                                                "type": "ipv4",
-                                                                "continent_code": "NA",
-                                                                "continent_name": "North America",
-                                                                "country_code": "US",
-                                                                "country_name": "United States",
-                                                                "region_code": "CA",
-                                                                "region_name": "California",
-                                                                "city": "Los Angeles",
-                                                                "zip": "90013",
-                                                                "latitude": 34.0453,
-                                                                "longitude": -118.2413,
-                                                                "location": {
-                                                                    "geoname_id": 5368361,
-                                                                    "capital": "Washington D.C.",
-                                                                    "languages": [
-                                                                        {
-                                                                        "code": "en",
-                                                                        "name": "English",
-                                                                        "native": "English"
-                                                                        }
-                                                                    ],
-                                                                    "country_flag": "https://assets.ipstack.com/images/assets/flags_svg/us.svg",
-                                                                    "country_flag_emoji": "🇺🇸",
-                                                                    "country_flag_emoji_unicode": "U+1F1FA U+1F1F8",
-                                                                    "calling_code": "1",
-                                                                    "is_eu": false
-                                                                },
-                                                                "time_zone": {
-                                                                    "id": "America/Los_Angeles",
-                                                                    "current_time": "2018-03-29T07:35:08-07:00",
-                                                                    "gmt_offset": -25200,
-                                                                    "code": "PDT",
-                                                                    "is_daylight_saving": true
-                                                                },
-                                                                "currency": {
-                                                                    "code": "USD",
-                                                                    "name": "US Dollar",
-                                                                    "plural": "US dollars",
-                                                                    "symbol": "$",
-                                                                    "symbol_native": "$"
-                                                                },
-                                                                "connection": {
-                                                                    "asn": 25876,
-                                                                    "isp": "Los Angeles Department of Water & Power"
-                                                                },
-                                                                "security": {
-                                                                    "is_proxy": false,
-                                                                    "proxy_type": null,
-                                                                    "is_crawler": false,
-                                                                    "crawler_name": null,
-                                                                    "crawler_type": null,
-                                                                    "is_tor": false,
-                                                                    "threat_level": "low",
-                                                                    "threat_types": null
-                                                                    }
-                                                                })
+                                                                const object = JSON.stringify({"country":"India","state":"Tamil Nadu","city":"Erode","district":"Erode ","lat":"﻿11.34083","long":"77.71722","gps_cordinates":"11°20′27″N 77°43′02″E﻿","language":"Tamil","other_languages":"Telugu, Kannada and Urdu"})
                                                                     console.log(object)
                                                                     // have to use jquery here to get json object from rest api.
                                                                     try {
@@ -301,7 +243,7 @@
                                         <p class="lead ">The CBLL's primary endpoint is called Standard Lookup and is used to look up lat-long. To call this endpoint, simply attach any lat-long of India to the API's base URL.</p>
                                         <h4 class="display-5 text-secondary" style="padding-top: 1rem; padding-bottom: 0.5em;">API Request</h4>
                                         <div class='container'>
-                                            <pre class="prettyprint lang-scm">/https://api.citybylatlong.com/?lat=24.000?long=74.00?access_key = YOUR_ACCESS_KEY</pre>
+                                            <pre class="prettyprint lang-scm">/https://api.citybylatlong.com/query?lat=11.2&long=78.01&key = YOUR_ACCESS_KEY</pre>
                                         </div>
                                         <h6 class="display-5 text-secondary"  style="padding-top: 1rem; padding-bottom: 0.5em;">Request Parameters:</h6>         
                                         <table class="table">
@@ -337,16 +279,8 @@
                                             <script type="text/javascript">
                                                 function getJson() {
                                                                 const error = JSON.stringify( {
-                                                                "ip": "134.201.250.155",
-                                                                "hostname": "134.201.250.155",
-                                                                "type": "ipv4",
-                                                                "continent_code": "NA",
-                                                                "continent_name": "North America",
-                                                                "country_code": "US",
-                                                                "country_name": "United States",
-                                                                "region_code": "CA",
-                                                                "region_name": "California"
-                                                                })
+                                                                "country":"India","state":"Tamil Nadu","city":"Erode","district":"Erode ","lat":"﻿11.34083","long":"77.71722","gps_cordinates":"11°20′27″N 77°43′02″E﻿","language":"Tamil","other_languages":"Telugu, Kannada and Urdu"}
+                                                                )
                                                                     console.log("ERROR: "+error)
                                                                     // have to use jquery here to get json object from rest api.
                                                                     try {
@@ -386,7 +320,7 @@
                                     </div>
                                 </div>
                             </section>
-
+<!-- 
                             <section id = "javascript">
                                 <div class="jumbotron jumbotron-fluid shadow-sm " style="padding-bottom: 10px;" >
                                     <div class="container ">
@@ -412,7 +346,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </section>  
+                            </section>   -->
                         </div>
                     </div>
                 </div>

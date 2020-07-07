@@ -71,8 +71,6 @@ router.get('/register',checkNotAuthenticated, (req, res) =>{
     res.render('register.ejs')
 })
 
-
-
 router.get('/contact', (req, res) =>{
     res.render('contact.ejs',{currentUser : req.user})
 })
@@ -95,7 +93,7 @@ router.get('/account',checkAuthenticated, (req, res) =>{
         let paymentStatus = 'free'
         let amountPay = '0'
         let availableCalls = 10000
-        let remainingCalls = 5000
+        let remainingCalls = 0
         const startTimestamp = Date.now().toString()
         const endTimestamp = (parseInt(startTimestamp) +  2678400000).toString() 
         let billingDate =  moment().format('L')
