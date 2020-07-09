@@ -72,20 +72,43 @@ app.get('/query', (req, res) =>{
                         pool.query(updateQuery).then(response => {
                             console.log('Updated Remaining Calls')
                         });
-
-                    });
+                    })
         
                 }).catch(err => {
                     // res.redirect('/contact')
                     res.send('Error');
-                    console.log(err.stack);
+                    res.send({
+                        "success": false,
+                        "error": {
+                        "code": 301,
+                        "type": "invalid_fields",
+                        "info": "One or more invalid fields were specified using the fields parameter."
+                        }
+                    });
+                    // console.log(err);
                 })
             }
             else{
-                console.log('Wrong');
-                res.send('Error : Invalid user');
+                res.send({
+                    "success": false,
+                    "error": {
+                    "code": 104,
+                    "type": "usage_limit_reached",
+                    "info": "Your monthly API request volume has been reached. Please upgrade your plan."
+                    }
+                });
             }
-        })
+        }).catch(err=>{
+            console.log("Error Bro")
+            res.send({
+                "success": false,
+                "error": {
+                "code": 101,
+                "type": "invalid_access_key",
+                "info": "No API Key was specified or an invalid API Key was specified."
+                }
+                });
+        });
 
     }
     catch(err){
